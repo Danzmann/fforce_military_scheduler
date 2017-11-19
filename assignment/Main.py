@@ -1,13 +1,15 @@
 import Squad
 
+import random
 
 Patrols = []
 
-
 def AddSquad(time,Squads):
 
+    numsquads = len(Squads)
+
     print("Enter squad members name, one by one, exit to finish:")
-    Squads.append(Squad.Squad(time, len(Squads)+1))
+    Squads.append(Squad.Squad(time, numsquads))
     cond = 1
 
     while cond:
@@ -22,15 +24,11 @@ def AddSquad(time,Squads):
             Squads[len(Squads) - 1].AddMember(member, 0)
         else:
             print("invalid")
+
+    numsquads += 1
     for a in Squads:
+        a.numsquads = numsquads
         a.updateTimeCalc(time/len(Squads))
-
-
-def countAll():
-    count = 0
-    for i in Squads:
-        count += i.NumMembers()
-        return count
 
 def TotalTime(stime, etime):
     count = 0
@@ -43,7 +41,8 @@ def TotalTime(stime, etime):
 
 
 def showSchedule(Squads, stime, ttime):
-    # currtime will show the time of current shift (start time + i)
+
+    # currtime will show the time of current shift
     currtime = stime
     currSquad = 0
     currSquadMember = 0
@@ -63,7 +62,16 @@ def showSchedule(Squads, stime, ttime):
         currtime += 1
 
 
+def buildStoveWatch(Squads, ttime):
+    for a in Squads:
+        a.BuildSWatch()
+
+    if ttime % len(Squads) != 0:
+        random.choice(Squads).BuildSWatchExtra()
+
+
 def main():
+    random.seed()
     Squads = []
 
     #Temporary terminal inputs:
@@ -75,7 +83,7 @@ def main():
 
     while True:
         AddSquad(ttime,Squads)
-        cond = input("exit to quit, other input to add another Squad: ")
+        cond = input("(n) finish, (y) add another Squad: ")
         if cond.lower() == "y":
             for a in Squads:
                 a.NewSquad()
@@ -83,8 +91,7 @@ def main():
         if cond.lower() == "n":
             break
 
-    for a in Squads:
-        a.BuildSWatch()
+    buildStoveWatch(Squads,ttime)
 
     showSchedule(Squads, stime, ttime)
 
