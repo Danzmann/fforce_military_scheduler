@@ -57,7 +57,9 @@ def showSchedule(Squads, stime, ttime):
             currSquad += 1
             currSquadMember = 0
 
-        print(str(currtime) + ":00 " + str(Squads[currSquad].StoveWatch[currSquadMember][0]))
+        print(str(currtime) + ":00 \t" + str(Squads[currSquad].StoveWatch[currSquadMember][0]
+                            + "\t\t| " + str(Squads[currSquad].patrol[currSquadMember][0][0]
+                            + " and " + str(Squads[currSquad].patrol[currSquadMember][1][0]))))
         currSquadMember += 1
         currtime += 1
 
@@ -91,14 +93,11 @@ def main():
 
     buildStoveWatch(Squads,ttime)
 
-    showSchedule(Squads, stime, ttime)
-
     for a in Squads:
         a.BuildPatrol()
 
-    for a in Squads:
-        for b in a.patrol:
-            print(b)
+    showSchedule(Squads, stime, ttime)
+
 
 
 if __name__ == "__main__":

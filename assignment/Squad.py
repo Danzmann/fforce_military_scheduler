@@ -122,10 +122,10 @@ class Squad:
 
             self.patrol.append(currentPatrol)
             currentPatrol = []
-        #self.PatrolOptimization(numPatrolMember)
+        self.PatrolOptimization(numPatrolMember)
 
 # Not yet implemented
-    def PatrolOptimization(self,numPatrolMember):
+    def PatrolOptimization(self, numPatrolMember):
 
         # Checks who is driving alone (driver)
         problematic = []
@@ -151,5 +151,10 @@ class Squad:
             for a in problematic:
                 index = 0
                 for b in self.patrol:
-                    break
+                    if b[1] != self.StoveWatch[a[1]] and \
+                                    underused[current] != self.StoveWatch[index]:
+                        self.patrol[a[1]].append(b[1])
+                        self.patrol[index][1] = underused[current]
+                        current += 1
+                        break
                     index += 1
