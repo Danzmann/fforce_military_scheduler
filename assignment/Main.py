@@ -85,8 +85,6 @@ def main():
         AddSquad(ttime,Squads)
         cond = input("(n) finish, (y) add another Squad: ")
         if cond.lower() == "y":
-            for a in Squads:
-                a.NewSquad()
             continue
         if cond.lower() == "n":
             break
@@ -95,6 +93,12 @@ def main():
 
     showSchedule(Squads, stime, ttime)
 
+    for a in Squads:
+        a.BuildPatrol()
+
+    for a in Squads:
+        for b in a.patrol:
+            print(b)
 
 
 if __name__ == "__main__":
